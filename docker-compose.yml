@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - mongo_net
+      - redive_net
+    environment:
+      - BOT_TOKEN=${DISCORD_BOT_TOKEN}
+    volumes:
+      - ./config.json:/app/config.json
+
+networks:
+  mongo_net:
+    external: true
+  redive_net:
+    external: true

@@ -9,6 +9,10 @@ import asyncio
 import uuid
 
 
+async def is_admin(ctx):
+    return ctx.author.id in [542332441478823947]
+
+
 class Admin(commands.Cog):
     def __init__(self, bot: AIKyaru):
         self.bot = bot
@@ -39,7 +43,7 @@ class Admin(commands.Cog):
         await self.bot.send_debug(embed=embed)
         await message.edit(content=f"已呼叫, 追蹤碼: `{tracking_uuid}`")
 
-    @commands.is_owner()
+    @commands.check(is_admin)
     @commands.group(hidden=True)
     async def admin(self, ctx: Context):
         """
@@ -146,6 +150,11 @@ class Admin(commands.Cog):
         """
         self.bot.stateManger.clean_cache(id)
         await ctx.send(":white_check_mark: Sucess")
+
+    @admin.command()
+    async def reload_config(self, ctx: Context):
+        await self.bot.config.update(reload_config=True)
+        await ctx.send("config.json 重載成功")
 
 
 def setup(bot):

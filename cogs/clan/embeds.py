@@ -47,15 +47,15 @@ class Embeds:
         self.bot = bot
         self.author = {
             "name": "戰隊管理協會",
-            "icon_url": "https://guild.randosoru.me/static/images/icon/64x64.png",
-            "url": "https://guild.randosoru.me",
+            "icon_url": "https://pcguild.randosoru.me/static/images/icon/64x64.png",
+            "url": "https://pcguild.randosoru.me",
         }
 
     def create_author(self, title: str):
         author = {
             "name": f"戰隊管理協會 | {title}",
-            "icon_url": "https://guild.randosoru.me/static/images/icon/64x64.png",
-            "url": "https://guild.randosoru.me",
+            "icon_url": "https://pcguild.randosoru.me/static/images/icon/64x64.png",
+            "url": "https://pcguild.randosoru.me",
         }
         return author
 
@@ -69,7 +69,7 @@ class Embeds:
         embed.add_field(name="報名表ID", value=form["id"], inline=False)
 
         components = create_actionrow(
-            *[create_button(style=ButtonStyle.URL, label="點我前往", url=f"https://guild.randosoru.me/forms/{form['id']}")]
+            *[create_button(style=ButtonStyle.URL, label="點我前往", url=f"https://pcguild.randosoru.me/forms/{form['id']}")]
         )
 
         return embed, components
@@ -84,7 +84,8 @@ class Embeds:
                 status = status_str[j["status"]]
                 name = j["user"]["name"]
                 comment = j["comment"]
-                last_modified = datetime.fromtimestamp(j["last_modified"]).strftime("%m/%d %H:%M")
+                last_modified = datetime.fromtimestamp(
+                    j["last_modified"]).strftime("%m/%d %H:%M")
                 if j["damage"]:
                     damage = f"DMG: {j['damage']:10,}"
                     total_damage += j["damage"]
@@ -113,13 +114,14 @@ class Embeds:
             title=f"{boss_data['name']} ({week}周{boss_data['boss']}王)",
             description=hpbar + content,
             thumbnail=boss_data["image"],
-            url=f"https://guild.randosoru.me/forms/{form['id']}/week/{week}",
+            url=f"https://pcguild.randosoru.me/forms/{form['id']}/week/{week}",
             author=self.create_author(form["title"]),
             footer={"text": f"{form['month']} | {form['id']} | 資料獲取時間"},
         )
         embed.timestamp = datetime.utcnow()
 
-        components = self.create_record_buttons(form["id"], week, boss_data["boss"])
+        components = self.create_record_buttons(
+            form["id"], week, boss_data["boss"])
         return embed, components
 
     def create_record_buttons(self, form_id: str, week: int, boss: int):
@@ -129,7 +131,8 @@ class Embeds:
         buttons["components"][boss - 1]["disabled"] = True
 
         for i, j in enumerate(buttons["components"]):
-            j["custom_id"] = pref_custom_id(custom_id="clan.records", data={"i": form_id, "w": week, "b": i + 1})
+            j["custom_id"] = pref_custom_id(custom_id="clan.records", data={
+                                            "i": form_id, "w": week, "b": i + 1})
 
         if week == 1:
             week_btns["components"][0]["disabled"] = True
@@ -170,10 +173,12 @@ class Embeds:
             author=self.create_author(form["title"]),
             footer={"text": f"{form['month']} | {form['id']}"},
         )
-        embed.add_field(name="狀態", value=status_str[status].strip(), inline=True)
+        embed.add_field(
+            name="狀態", value=status_str[status].strip(), inline=True)
         embed.add_field(name="紀錄編號", value=record_id, inline=True)
 
-        components = self.create_record_update_buttons(form["id"], week, boss_data["boss"], status, record_id)
+        components = self.create_record_update_buttons(
+            form["id"], week, boss_data["boss"], status, record_id)
 
         return embed, components
 
@@ -184,17 +189,20 @@ class Embeds:
             author=self.create_author(form["title"]),
             footer={"text": f"{form['month']} | {form['id']}"},
         )
-        embed.add_field(name="狀態", value=status_str[status].strip(), inline=True)
+        embed.add_field(
+            name="狀態", value=status_str[status].strip(), inline=True)
         embed.add_field(name="紀錄編號", value=record_id, inline=True)
 
-        components = self.create_record_update_buttons(form["id"], week, boss_data["boss"], status, record_id)
+        components = self.create_record_update_buttons(
+            form["id"], week, boss_data["boss"], status, record_id)
 
         return embed, components
 
     def create_record_update_buttons(self, form_id: str, week: int, boss: int, status: int, record_id: int):
         if status < 20:
             components = deepcopy(status_options)
-            components["components"][0]["options"][status_ids.index(status)]["default"] = True
+            components["components"][0]["options"][status_ids.index(
+                status)]["default"] = True
             components["components"][0]["custom_id"] = pref_custom_id(
                 custom_id="clan.report.update", data={"i": form_id, "w": week, "b": boss, "r": record_id}
             )
@@ -205,7 +213,8 @@ class Embeds:
             for i in range(3):
                 components["components"][i]["custom_id"] = pref_custom_id(
                     custom_id="clan.report.finish",
-                    data={"i": form_id, "w": week, "b": boss, "c": i + 1, "s": status, "r": record_id},
+                    data={"i": form_id, "w": week, "b": boss,
+                          "c": i + 1, "s": status, "r": record_id},
                 )
 
         return components
@@ -218,9 +227,12 @@ class Embeds:
             author=self.create_author(form["title"]),
             footer={"text": f"{form['month']} | {form['id']}"},
         )
-        embed.add_field(name="周次/Boss", value=f"{boss_data['name']} {week}周{boss_data['boss']}王", inline=True)
-        embed.add_field(name="狀態", value=status_str[status].strip(), inline=True)
-        embed.add_field(name="傷害", value=f"{record['damage']:,}" if record["damage"] else "無", inline=True)
+        embed.add_field(
+            name="周次/Boss", value=f"{boss_data['name']} {week}周{boss_data['boss']}王", inline=True)
+        embed.add_field(
+            name="狀態", value=status_str[status].strip(), inline=True)
+        embed.add_field(
+            name="傷害", value=f"{record['damage']:,}" if record["damage"] else "無", inline=True)
         embed.add_field(name="備註", value=record["comment"] or "無", inline=True)
         embed.add_field(
             name="最後更新時間", value=datetime.fromtimestamp(record["last_modified"]).strftime("%m/%d %H:%M:%S"), inline=True

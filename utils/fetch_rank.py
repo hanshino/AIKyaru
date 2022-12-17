@@ -39,7 +39,8 @@ class FetchRank:
             data = re.search(r"(\{.*\})", await resp.text())
             data = json.loads(data.group(1))
 
-        cols = self.column_check_emonight([i["label"].strip() for i in data["table"]["cols"]])
+        cols = self.column_check_emonight(
+            [i["label"].strip() for i in data["table"]["cols"]])
         result = {}
         unique_check = []
         for row in data["table"]["rows"]:
@@ -102,7 +103,8 @@ class FetchRank:
             data = re.search(r"(\{.*\})", await resp.text())
             data = json.loads(data.group(1))
 
-        cols = self.column_check_nonplume([i["label"].strip() for i in data["table"]["cols"]])
+        cols = self.column_check_nonplume(
+            [i["label"].strip() for i in data["table"]["cols"]])
         unique_check = []
         for row in data["table"]["rows"]:
             row = row["c"]
@@ -122,6 +124,9 @@ class FetchRank:
             else:
                 unique_check.append(id)
 
+            if not (id in self.result):
+                continue
+
             if self.result[id]["name"] != name:
                 self.logger.error(f"Error {name} ({id})")
 
@@ -129,7 +134,8 @@ class FetchRank:
             try:
                 nonplume["pvp"] = row[cols["pvp"]]["v"]
                 nonplume["cb"] = row[cols["cb"]]["v"]
-                nonplume["preferRank"] = row[cols["preferRank"]]["v"] if row[cols["preferRank"]] else "-"
+                nonplume["preferRank"] = row[cols["preferRank"]
+                                             ]["v"] if row[cols["preferRank"]] else "-"
                 nonplume["preferRarity"] = row[cols["preferRarity"]]["v"]
                 nonplume["comment"] = row[cols["comment"]]["v"]
                 self.result[id]["nonplume"] = nonplume
@@ -195,7 +201,7 @@ class FetchRank:
 
         if len(correct_columns.keys()) != 6:
             self.logger.warning(f"column_check_nonplume | {correct_columns}")
-        
+
         return correct_columns
 
     # fmt: on

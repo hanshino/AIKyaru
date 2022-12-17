@@ -89,7 +89,7 @@ python3 main.py
   },
   "DEBUG_CHANNEL": null, // Discord文字頻道ID, 供傳送錯誤訊息用
   "MONGODB_URL": "mongodb://username:password@host:port", // MongoDB網址
-  "GUILD_API_URL": "https://guild.randosoru.me/api", // 戰隊管理協會API
+  "GUILD_API_URL": "https://pcguild.randosoru.me/api", // 戰隊管理協會API
   "GUILD_API_TOKEN": "GUILD_API_TOKEN", // API Token
   "GAME_API_URL": "https://example.com", // 個人檔案API
   "GAME_API_TOKEN": "GAME_API_TOKEN", // API Token

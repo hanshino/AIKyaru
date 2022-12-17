@@ -13,7 +13,7 @@ class NewsForward(commands.Cog):
     def __init__(self, bot: AIKyaru):
         self.bot = bot
         self.logger = logging.getLogger("AIKyaru.NewsForward")
-        self.apiUrl = "https://randosoru.me/api/newsForward"
+        self.apiUrl = "https://pcrd.randosoru.me/api/pcredive/v2/newsForward"
         self.session = ClientSession(headers={"User-Agent": "AIKyaru v3"}, timeout=ClientTimeout(total=10))
 
     def cog_unload(self):

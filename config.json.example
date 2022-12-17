@@ -34,7 +34,7 @@
   },
   "DEBUG_CHANNEL": null,
   "MONGODB_URL": "mongodb://username:password@host:port",
-  "GUILD_API_URL": "https://guild.randosoru.me/api",
+  "GUILD_API_URL": "https://pcguild.randosoru.me/api",
   "GUILD_API_TOKEN": "GUILD_API_TOKEN",
   "GAME_API_URL": "https://example.com",
   "GAME_API_TOKEN": "GAME_API_TOKEN",
